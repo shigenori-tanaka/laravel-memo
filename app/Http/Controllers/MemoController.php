@@ -14,21 +14,19 @@ class MemoController extends Controller
      */
     public function index(Request $request)
     {
+        // viewに渡す値を記述し、変数に代入
+        $message = "メモ一覧";
+        
         // filled():値が有り、空欄かどうか判定する
         if($request->filled('keyword')){
             $keyword = $request->input('keyword');
-            $message = "メモ一覧ページです";
             $memos = Memo::where('body', 'like', '%'.$keyword.'%')->get();
-            
-            
         }else{
-            //①viewに渡す値を記述し、変数に代入
-            $message = "メモ一覧ページです";
-            //②Memoモデルを使ってmemosテーブルから情報を全て取得し、変数に代入
+            // Memoモデルを使ってmemosテーブルから情報を全て取得し、変数に代入
             $memos = Memo::all();
         }
        
-        //①、②を第二引数に変数を入れることでviewに渡す準備OK　（compact関数を使用）
+        //第二引数に変数を入れることでviewに渡す準備OK　（compact関数を使用）
         return view('index', compact('message', 'memos'));
     }
 
